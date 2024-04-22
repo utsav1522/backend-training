@@ -1,9 +1,7 @@
-const path = require("path");
-const { writeFile, readFile } = require("fs/promises");
-const prompt = require("prompt");
-
-const { addition, subtraction, multiplication, division } = require("./math");
-const { read, write } = require("fs");
+import path from "path";
+import { writeFile, readFile } from "fs/promises";
+import prompt from "prompt";
+import { addition, subtraction, multiplication, division } from "./math.js";
 
 const writeResultToFile = (num1, num2, result, operation) => {
   writeFile(
