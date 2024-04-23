@@ -1,25 +1,40 @@
 import path from "path";
-import { writeFile, readFile } from "fs/promises";
 import prompt from "prompt";
-import { addition, subtraction, multiplication, division } from "./math.js";
+import { writeFile, readFile } from "fs/promises";
+import Excel from "exceljs";
+import { addition, subtraction, multiplication, division } from "./lib/math.js";
+const workbook = new Excel.Workbook();
+const worksheet = workbook.addWorksheet("Result List");
+worksheet.columns = [
+  {
+    key: "operation",
+    header: "Operation",
+  },
+  {
+    key: "num1",
+    header: "Num_1",
+  },
+  {
+    key: "num2",
+    header: "Num_2",
+  },
+  {
+    key: "result",
+    header: "Result",
+  },
+];
 
 const writeResultToFile = (num1, num2, result, operation) => {
-  writeFile(
-    "result.xls",
-    num1.toString() +
-      ` ${operation} ` +
-      num2.toString() +
-      " = " +
-      result.toString(),
-    (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("data written successfully");
-        console.log("data in file is : ", readFile("result.xls", "utf-8"));
-      }
-    }
+  worksheet.addRow(
+    {
+      operation: operation,
+      num1: num1,
+      num2: num2,
+      result: result,
+    },
+    3
   );
+  workbook.xlsx.writeFile("./result.xlsx");
 };
 
 console.log("Enter a choice:");
@@ -62,7 +77,7 @@ prompt.get(schema, function (error, result) {
       result.num1,
       result.num2,
       addition(Number(result.num1), Number(result.num2)),
-      "+"
+      "Addition"
     );
   } else if (Number(result.choice) === 2) {
     console.log(
@@ -73,7 +88,7 @@ prompt.get(schema, function (error, result) {
       result.num1,
       result.num2,
       subtraction(Number(result.num1), Number(result.num2)),
-      "-"
+      "Subtraction"
     );
   } else if (Number(result.choice) === 3) {
     console.log(
@@ -84,9 +99,9 @@ prompt.get(schema, function (error, result) {
       result.num1,
       result.num2,
       multiplication(Number(result.num1), Number(result.num2)),
-      "X"
+      "Multiply"
     );
-  } else {
+  } else if (Number(result.choice) === 4) {
     if (Number(result.num2) === 0) {
       console.log("Divisor cannot be zero");
       return;
@@ -102,7 +117,7 @@ prompt.get(schema, function (error, result) {
         result.num1,
         result.num2,
         division(Number(result.num1), Number(result.num2)),
-        "/"
+        "Divide"
       );
     }
   }

@@ -1,6 +1,7 @@
 {
   "name": "backend-training",
   "version": "1.0.0",
+  "type": "module",
   "description": "The following repository is for the backend training.",
   "main": "index.js",
   "scripts": {
@@ -9,6 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^3.1.0"
+    "exceljs": "^4.4.0",
+    "lodash": "^4.17.21",
+    "nodemon": "^3.1.0",
+    "prompt": "^1.3.0",
+    "prompt-sync": "^4.2.0",
+    "xlsx": "^0.18.5"
   }
 }
