@@ -7,10 +7,24 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-console.log("Welcome to the Math Operations CLI!");
+function isValidNumber(input) {
+  return /^\d+$/.test(input);
+}
 
 rl.question("Enter the first number: ", (num1) => {
+  if (!isValidNumber(num1)) {
+    console.log("Please enter a valid number.");
+    rl.close();
+    return;
+  }
+
   rl.question("Enter the second number: ", (num2) => {
+    if (!isValidNumber(num2)) {
+      console.log("Please enter a valid number.");
+      rl.close();
+      return;
+    }
+
     rl.question(
       "Enter the operation (add/subtract/multiply/divide): ",
       (operation) => {
