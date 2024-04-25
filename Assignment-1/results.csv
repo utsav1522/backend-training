@@ -1,1 +1,3 @@
-multiply,100,200,20000
+Operation, Num1, Num2, Result
+add,10,20,30
+subtract,100,200,-100
