@@ -7,11 +7,11 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-function isValidNumber(input) {
-  return /^\d+$/.test(input);
-}
+const isValidNumber = (input) => {
+  return /^-?\d*\.?\d+$/.test(input);
+};
 
-function appendDataToCSV(operation, num1, num2, result) {
+const appendDataToCSV = (operation, num1, num2, result) => {
   const csvData = `${operation},${num1},${num2},${result}\n`;
   fs.appendFile("results.csv", csvData, (err) => {
     if (err) {
@@ -21,28 +21,27 @@ function appendDataToCSV(operation, num1, num2, result) {
     }
     rl.close();
   });
-}
+};
 
-fs.access("results.csv", fs.constants.F_OK, (err) => {
+fs.access("results.csv", fs.constants.F_OK, async (err) => {
   if (err) {
     // File does not exist, add headers and data
     const headers = "Operation, Num1, Num2, Result\n";
-    fs.writeFile("results.csv", headers, (err) => {
-      if (err) {
-        console.error("Error writing headers to file:", err);
-        rl.close();
-      } else {
-        console.log("Headers added to results.csv");
-        collectInput();
-      }
-    });
+    try {
+      await fs.promises.writeFile("results.csv", headers);
+      console.log("Headers added to results.csv");
+      collectInput();
+    } catch (error) {
+      console.error("Error writing headers to file:", error);
+      rl.close();
+    }
   } else {
     // File exists, only add data
     collectInput();
   }
 });
 
-function collectInput() {
+const collectInput = () => {
   rl.question("Enter the first number: ", (num1) => {
     if (!isValidNumber(num1)) {
       console.log("Please enter a valid number.");
@@ -84,7 +83,7 @@ function collectInput() {
       );
     });
   });
-}
+};
 
 rl.on("close", () => {
   process.exit(0);
