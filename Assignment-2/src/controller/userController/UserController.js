@@ -1,19 +1,15 @@
-import express from "express";
+import { getByIdService } from "../../service/userController/userController.js";
 import { mockData } from "../../../mock/MockData.js";
-const router = express.Router();
 
 class UserController {
   getUsers = (req, res) => {
+    
     res.json(mockData.data);
   };
 
-  getOne = (req, res) => {
+  getById = (req, res) => {
     let id = req.params.id;
-    let result = mockData?.data.find((ele) => {
-      if (ele.id === Number(id)) {
-        return ele;
-      }
-    }) || { data: "no data" };
+    const result = getByIdService(Number(id));
     res.json(result);
   };
 }

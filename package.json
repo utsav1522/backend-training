@@ -3,9 +3,9 @@
   "type": "module",
   "version": "1.0.0",
   "description": "The following repository is for the backend training.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "npx nodemon app.js",
+    "start": "nodemon ./Assignment-2/src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
