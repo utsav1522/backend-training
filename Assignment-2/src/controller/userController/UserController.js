@@ -3,7 +3,6 @@ import { mockData } from "../../../mock/MockData.js";
 
 class UserController {
   getUsers = (req, res) => {
-    
     res.json(mockData.data);
   };
 
