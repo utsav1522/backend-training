@@ -1,9 +1,8 @@
-import { getByIdService } from "../../service/userController/userController.js";
+import { getByIdService } from "../../service/userService/userService.js";
 import { mockData } from "../../../mock/MockData.js";
 
 class UserController {
   getUsers = (req, res) => {
-    
     res.json(mockData.data);
   };
 
