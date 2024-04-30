@@ -1,3 +1,7 @@
+/**11.Write a series of middleware functions and chain them together 
+ * to demonstrate how multiple middleware can be applied to a single route.
+ */
+
 const middleWare1 = (req, res, next) => {
   console.log("middleware1 called");
   next();

@@ -6,7 +6,6 @@ import {
 } from "../../service/addressController/addressService.js";
 import dotenv from "dotenv";
 const env = dotenv.config().parsed;
-const SECRET_TOKEN = env.SECRET_TOKEN;
 
 class AddressController {
   addressData = (req, res, next) => {
@@ -26,10 +25,6 @@ class AddressController {
     const filteredData = filterData(data, limit, skip);
     res.json(filteredData);
   };
-
-  generateAccessToken(username) {
-    return jwt.sign(username, SECRET_TOKEN, { expiresIn: 60 * 60 });
-  }
 }
 
 const addressController = new AddressController();
