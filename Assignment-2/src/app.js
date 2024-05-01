@@ -5,7 +5,9 @@ import router from "./router.js";
 const env = dotenv.config().parsed;
 
 const app = express();
+
 app.set("trust proxy", true);
+
 let port = env.PORT || 4000;
 app.use("/api", router);
 
