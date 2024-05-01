@@ -2,7 +2,6 @@
   "name": "backend-training",
   "type": "module",
   "version": "1.0.0",
-  "type": "module",
   "description": "The following repository is for the backend training.",
   "main": "app.js",
   "scripts": {
