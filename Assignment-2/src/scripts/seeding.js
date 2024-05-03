@@ -14,5 +14,4 @@ const generateData = (count) => {
     };
   });
 };
-
 export { generateData };

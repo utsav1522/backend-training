@@ -7,49 +7,34 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 const env = dotenv.config().parsed;
+const SECRET_TOKEN = env.SECRET_TOKEN;
 
-const generateToken = (req, res) => {
-  const name = req.headers.name;
-  const username = req.headers.username;
+const signIn = (req, res) => {
+  const username = req.body.username;
+  const name = req.body.name;
 
-  const payload = {
+  const user = {
     name: name,
     username: username,
   };
-
-  const secret = env.SECRET_TOKEN;
-  const options = { expiresIn: "1h" };
-  const token = jwt.sign(payload, secret, options);
-  res.json({ token: token });
+  const accessToken = jwt.sign(user, SECRET_TOKEN);
+  res.json({ accessToken: accessToken });
 };
 
-function verifyAccessToken(token) {
-  const secret = env.SECRET_TOKEN;
+const authenticate = (req, res, next) => {
+  const authHeaders = req.headers["authorization"];
+  const token = authHeaders && authHeaders.split(" ")[1];
 
-  try {
-    const decoded = jwt.verify(token, secret);
-    return { success: true, data: decoded };
-  } catch (error) {
-    return { success: false, error: error.message };
+  if (token === null) {
+    res.status(401).send("Token not found ....");
   }
-}
-
-const authentication = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (!token) {
-    return res.sendStatus(401);
-  }
-
-  const result = verifyAccessToken(token);
-
-  if (!result.success) {
-    return res.status(403).json({ error: result.error });
-  }
-
-  req.user = result.data;
-  next();
+  jwt.verify(token, SECRET_TOKEN, (err, user) => {
+    if (err) {
+      res.send(403).send("Token No Longer Valid");
+    }
+    req.user = user;
+    next();
+  });
 };
 
-export { generateToken, authentication };
+export { signIn, authenticate };

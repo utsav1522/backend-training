@@ -1,25 +1,35 @@
-/**11.Write a series of middleware functions and chain them together 
+/**11.Write a series of middleware functions and chain them together
  * to demonstrate how multiple middleware can be applied to a single route.
  */
 
-const middleWare1 = (req, res, next) => {
-  console.log("middleware1 called");
+const authenticationMiddleware = (req, res, next) => {
+  console.log("authenticating .....");
   next();
 };
 
-const middleWare2 = (req, res, next) => {
-  console.log("middleware 2 called");
+const authorizingMiddleware = (req, res, next) => {
+  console.log("authorizing ....");
   next();
 };
 
-const middleWare3 = (req, res, next) => {
-  console.log("middleware 3 called");
+const dataFetchignMiddleware = (req, res, next) => {
+  console.log("fetching data ....");
   next();
 };
 
-const middleWare4 = (req, res, next) => {
-  console.log("middleware 4 called");
+const userDataFetchingMiddleware = (req, res, next) => {
+  console.log("user data fetching ....");
   next();
 };
 
-export { middleWare1, middleWare2, middleWare3, middleWare4 };
+const resolver = (req, res) => {
+  res.send("Check console..... \n" + "Terminating the middleware chains....");
+};
+
+export {
+  authenticationMiddleware,
+  authorizingMiddleware,
+  dataFetchignMiddleware,
+  userDataFetchingMiddleware,
+  resolver,
+};
