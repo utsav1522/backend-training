@@ -19,7 +19,13 @@ import {
 const router = Router();
 router.use(express.json());
 router.post("/signin", signIn);
-router.post("/getdata", authenticate, addressController.addressData);
+router.post(
+  "/getdata",
+  authenticate,
+  rateLimitting,
+  addressController.addressData
+);
+
 router.get("/logger", requestLogger);
 router.get(
   "/middleware-chain",
@@ -31,6 +37,5 @@ router.get(
 );
 router.get("/error", dataFetching, errorHandling);
 router.get("/add-response", addResponse);
-router.get("/rate-limitting", rateLimitting);
 
 export default router;

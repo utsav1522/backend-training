@@ -1,7 +1,7 @@
 import { signIn, authenticate } from "./authentication.js";
 
 import { requestLogger } from "./requestLogger.js";
-
+import { locations } from "./locations.js";
 import {
   authenticationMiddleware,
   authorizingMiddleware,
@@ -27,4 +27,5 @@ export {
   rateLimitting,
   dataFetching,
   errorHandling,
+  locations
 };
