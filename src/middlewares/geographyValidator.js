@@ -4,7 +4,7 @@
 
  */
 import os from "os";
-function getLocalIpAddress() {
+const getLocalIpAddress = () => {
   const interfaces = os.networkInterfaces();
   for (const interfaceName of Object.keys(interfaces)) {
     for (const interfaceInfo of interfaces[interfaceName]) {
@@ -14,7 +14,7 @@ function getLocalIpAddress() {
     }
   }
   return null;
-}
+};
 
 const geographyMiddleware = async (req, res) => {
   const ip = getLocalIpAddress();
