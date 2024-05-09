@@ -4,13 +4,10 @@
  */
 
 const queryMiddleWare = (req, res, next) => {
-  const query = req.query;
-  const queryParams = Object.values(query);
-  queryParams.map((ele) => {
-    if (isNaN(Number(ele))) {
-      return res.status(400).send("Query Parameter must be a number");
-    }
-  });
+  const query = req.params.id;
+  if (isNaN(Number(query))) {
+    return res.status(400).send("Query Parameter must be a number");
+  }
 
   next();
 };
