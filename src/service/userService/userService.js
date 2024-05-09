@@ -1,6 +1,6 @@
-import { mockData } from "../../../mock/MockData.js";
+import { mockData } from "../../mock/MockData.js";
 
-const getByIdService = (id) => {
+const getUserDataById = (id) => {
   let result = mockData?.data.find((ele) => {
     if (ele.id === Number(id)) {
       return ele;
@@ -9,4 +9,4 @@ const getByIdService = (id) => {
   return result;
 };
 
-export { getByIdService };
+export { getUserDataById };

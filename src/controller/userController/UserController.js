@@ -1,5 +1,5 @@
-import { getByIdService } from "../../service/userService/userService.js";
-import { mockData } from "../../../mock/MockData.js";
+import { getUserDataById } from "../../service/userService/userService.js";
+import { mockData } from "../../mock/MockData.js";
 
 class UserController {
   getUsers = (req, res) => {
@@ -8,7 +8,7 @@ class UserController {
 
   getById = (req, res) => {
     let id = req.params.id;
-    const result = getByIdService(Number(id));
+    const result = getUserDataById(Number(id));
     res.json(result);
   };
 }
