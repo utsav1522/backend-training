@@ -3,10 +3,13 @@ import dotenv from "dotenv";
 import router from "./router.js";
 import cookieParser from "cookie-parser";
 
+import requestIp from "request-ip";
+
 const env = dotenv.config().parsed;
 const app = express();
 app.set("trust proxy", true);
 let port = env.PORT || 4000;
+app.use(requestIp.mw());
 app.use("/api", router);
 app.use(cookieParser());
 

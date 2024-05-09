@@ -11,10 +11,9 @@ const router = Router();
 router.use(express.json());
 
 router.get("/", userController.getUsers);
-router.get("/query", queryMiddleWare, validationSuccessful);
 router.get("/geography", geographyMiddleware, validationSuccessful);
-router.get("/authorize", authorize);
-router.get("/:id", userController.getById);
 router.post("/register", validate, validationSuccessful);
+router.get("/authorize", authorize);
+router.get("/:id", queryMiddleWare, userController.getById);
 
 export default router;

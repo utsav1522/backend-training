@@ -7,11 +7,11 @@
 import Joi from "joi";
 
 const userValidationSchema = Joi.object({
-  name: Joi.string().min(2).alphanum().required(),
+  name: Joi.string().min(2).required(),
   age: Joi.number().min(1).max(115).integer().required(),
   username: Joi.string().min(2).max(50).alphanum().required(),
   email: Joi.string().email().required(),
-  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{8,30}$")),
 });
 
 export { userValidationSchema };
