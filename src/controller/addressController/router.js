@@ -2,9 +2,7 @@ import express, { Router } from "express";
 import { addressController } from "./addressController.js";
 
 import {
-  signIn,
   authenticate,
-  requestLogger,
   addResponse,
   rateLimitting,
   dataFetching,
@@ -13,14 +11,13 @@ import {
 
 const router = Router();
 router.use(express.json());
-router.post("/signin", signIn);
+router.post("/signin", addressController.userSignIn);
 router.post(
   "/getdata",
   authenticate,
   rateLimitting,
   addressController.addressData
 );
-router.get("/logger", requestLogger);
 router.get("/error", dataFetching, errorHandling);
 router.get("/add-response", addResponse);
 

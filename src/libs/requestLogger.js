@@ -7,7 +7,7 @@ const logger = winston.createLogger({
     new winston.transports.File({ filename: "logs/app.log" }),
   ],
 });
-const   requestLogger = (req, res, next) => {
+const requestLogger = (req, res, next) => {
   logger.log("verbose", "This is a verbose message");
   logger.log("debug", "This is a debug message");
   logger.log("silly", "This is a silly message");

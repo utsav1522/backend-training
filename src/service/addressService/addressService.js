@@ -1,4 +1,17 @@
 import fs from "fs/promises";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+const env = dotenv.config().parsed;
+const SECRET_TOKEN = env.SECRET_TOKEN;
+const signIn = async (username, name) => {
+  const user = {
+    name: name,
+    username: username,
+  };
+  const accessToken = await jwt.sign(user, SECRET_TOKEN, { expiresIn: "1d" });
+  return accessToken;
+};
 
 const getLocations = async () => {
   const result = await fs.readFile(
@@ -6,4 +19,4 @@ const getLocations = async () => {
   );
   return JSON.parse(result);
 };
-export { getLocations };
+export { signIn, getLocations };

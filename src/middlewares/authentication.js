@@ -10,32 +10,27 @@ import dotenv from "dotenv";
 const env = dotenv.config().parsed;
 const SECRET_TOKEN = env.SECRET_TOKEN;
 
-const signIn = (req, res) => {
-  const username = req.body.username;
-  const name = req.body.name;
+const authenticate = async (req, res, next) => {
+  try {
+    const authHeaders = req.headers["authorization"];
 
-  const user = {
-    name: name,
-    username: username,
-  };
-  const accessToken = jwt.sign(user, SECRET_TOKEN);
-  res.json({ accessToken: accessToken });
-};
-
-const authenticate = (req, res, next) => {
-  const authHeaders = req.headers["authorization"];
-  const token = authHeaders && authHeaders.split(" ")[1];
-
-  if (token === null) {
-    res.status(401).send("Token not found ....");
-  }
-  jwt.verify(token, SECRET_TOKEN, (err, user) => {
-    if (err) {
-      res.send(403).send("Token No Longer Valid");
+    if (authHeaders.split(" ")[0] !== "Bearer") {
+      res.status(401).send("Invalid Token");
     }
-    req.user = user;
-    next();
-  });
+    const token = authHeaders && authHeaders.split(" ")[1];
+
+    if (!token) {
+      res.status(401).send("Token not found ....");
+    }
+    const result = await jwt.verify(token, SECRET_TOKEN);
+    if (Object.keys(result).length) {
+      next();
+    } else {
+      res.status().send();
+    }
+  } catch (err) {
+    res.status(401).send(err.message);
+  }
 };
 
-export { signIn, authenticate };
+export { authenticate };
