@@ -1,5 +1,6 @@
 /**
- * 6. Develop an authentication middleware using a JWT dummy token.
+
+* 6. Develop an authentication middleware using a JWT dummy token.
    7. Integrate the authentication middleware with the previously created APIs.
  */
 

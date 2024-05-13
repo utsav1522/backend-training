@@ -5,11 +5,6 @@ import {
   signIn,
   authenticate,
   requestLogger,
-  authenticationMiddleware,
-  authorizingMiddleware,
-  dataFetchignMiddleware,
-  userDataFetchingMiddleware,
-  resolver,
   addResponse,
   rateLimitting,
   dataFetching,
@@ -25,16 +20,7 @@ router.post(
   rateLimitting,
   addressController.addressData
 );
-
 router.get("/logger", requestLogger);
-router.get(
-  "/middleware-chain",
-  authenticationMiddleware,
-  authorizingMiddleware,
-  dataFetchignMiddleware,
-  userDataFetchingMiddleware,
-  resolver
-);
 router.get("/error", dataFetching, errorHandling);
 router.get("/add-response", addResponse);
 

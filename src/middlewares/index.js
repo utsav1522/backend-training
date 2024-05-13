@@ -2,13 +2,6 @@ import { signIn, authenticate } from "./authentication.js";
 
 import { requestLogger } from "./requestLogger.js";
 import { locations } from "./locations.js";
-import {
-  authenticationMiddleware,
-  authorizingMiddleware,
-  dataFetchignMiddleware,
-  userDataFetchingMiddleware,
-  resolver,
-} from "./middlewareChain.js";
 
 import { addResponse } from "./addResponse.js";
 import { rateLimitting } from "./rate-limitting.js";
@@ -18,14 +11,9 @@ export {
   signIn,
   authenticate,
   requestLogger,
-  authenticationMiddleware,
-  authorizingMiddleware,
-  dataFetchignMiddleware,
-  userDataFetchingMiddleware,
-  resolver,
   addResponse,
   rateLimitting,
   dataFetching,
   errorHandling,
-  locations
+  locations,
 };
