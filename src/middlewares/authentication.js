@@ -15,21 +15,21 @@ const authenticate = async (req, res, next) => {
     const authHeaders = req.headers["authorization"];
 
     if (authHeaders.split(" ")[0] !== "Bearer") {
-      res.status(401).send("Invalid Token");
+      return res.status(401).send("Invalid Token");
     }
     const token = authHeaders && authHeaders.split(" ")[1];
 
     if (!token) {
-      res.status(401).send("Token not found ....");
+      return res.status(401).send("Token not found ....");
     }
     const result = await jwt.verify(token, SECRET_TOKEN);
     if (Object.keys(result).length) {
       next();
     } else {
-      res.status().send();
+      return res.status(400).send("User Details not Found");
     }
   } catch (err) {
-    res.status(401).send(err.message);
+    return res.status(401).send(err.message);
   }
 };
 

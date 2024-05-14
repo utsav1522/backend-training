@@ -15,12 +15,12 @@ class AddressController {
       const name = req.body.name;
       if (username && name) {
         const accessToken = await signIn(username, name);
-        res.json({ accessToken: `Bearer ${accessToken}` });
+        return res.json({ accessToken: `Bearer ${accessToken}` });
       } else {
-        res.status(400).send("Credentials not specified");
+        return res.status(400).send("Credentials not specified");
       }
     } catch (err) {
-      res.status(500).send("Internal Server Error", err);
+      return res.status(500).send("Internal Server Error", err);
     }
   };
 }

@@ -4,7 +4,7 @@ class No {
 
 const rateLimitting = (req, res, next) => {
   if (No.count > 10) {
-    res.send("Exceeding no of requests: ");
+    return res.send("Exceeding no of requests: ");
   }
   No.count++;
   next();
