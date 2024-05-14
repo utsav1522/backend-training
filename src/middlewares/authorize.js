@@ -1,7 +1,7 @@
 // 7.User Build a validation middleware that dynamically fetches validation rules from a configuration file.
 // The rules should be applied based on the route being accessed.
 
-import { userData } from "../../mock/UserMock.js";
+import { userData } from "../mock/UserMock.js";
 
 const findUser = (id) => {
   const user = userData?.find((ele) => {
@@ -22,13 +22,12 @@ const checkPermissionn = (userData, request) => {
   return flag;
 };
 
-const authorize = (req, res, next) => {
+const authorize = (req, res) => {
   const userId = req.query.userId;
   const request = req.query.request;
   const userData = findUser(userId);
-  console.log(userData);
 
-  if (userData === undefined) {
+  if (!userData) {
     res.send("user not found");
   } else {
     if (checkPermissionn(userData, request)) {
