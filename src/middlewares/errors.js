@@ -2,7 +2,7 @@
  * 4. Create scenarios that generate all possible error codes.
  */
 
-import { errorCodes, errorMessage } from "../libs/constants";
+import {errorCodes} from "../libs/contants.js"
 
 const internalServerError = (err, req, res, next) => {
   res
@@ -39,6 +39,5 @@ export {
   unauthorized,
   forbidden,
   badRequest,
-  notAllowed,
   pageNotFound,
 };

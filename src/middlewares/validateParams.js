@@ -1,24 +1,34 @@
 const validateParams = async (req, res, next) => {
-  const username = req.query.username;
-  const name = req.query.name;
-  const phoneNumber = req.query.phoneNumber;
+  const name = req.body.name;
+  const phoneNumber = req.body.phoneNumber;
+  const username = req.body.username;
 
-  if (!name || name.toString().length < 2) {
-    throw new Error("Name Length too Short");
+  if (!name) {
+    return next(new Error("Name not specified"));
+  } else {
+    if (name.toString().length < 2) {
+      return next(new Error("Name Length too Short"));
+    }
   }
-  if (!phoneNumber || phoneNumber.toString().length < 10) {
-    throw new Error("Phone Number Length too short");
-  }
-  if (!username || username.toString().length < 5) {
-    await Promise.resolve()
-      .then(() => {
-        throw new Error("username length too short");
-      })
-      .catch((err) => {
-        next(err);
-      });
+  if (!phoneNumber) {
+    return next(new Error("Phone Number not specified"));
+  } else {
+    if (phoneNumber.toString().length < 10) {
+      return next(new Error("Phone Number Length too short"));
+    }
+    if (phoneNumber.toString().length > 10) {
+      return next(new Error("Phone Number Length too long"));
+    }
   }
 
-  res.send("The Query params are correct");
+  if (!username) {
+    return next(new Error("Username not specified"));
+  } else {
+    if (username.toString().length < 5) {
+      return next(new Error("username length too short"));
+    }
+  }
+
+  return res.send("The Query params are correct");
 };
 export { validateParams };

@@ -21,9 +21,11 @@ import {
   unauthorized,
   forbidden,
   badRequest,
-  notAllowed,
   pageNotFound,
 } from "../../middlewares/errors.js";
+import { readFile } from "../../middlewares/asyncError.js";
+import { SuccessMessage } from "../../libs/helper.js";
+import { throwError } from "../../middlewares/throwError.js";
 
 const router = Router();
 router.use(express.json());
@@ -46,23 +48,10 @@ router.get(
     res.send("Check console..... \n" + "Terminating the middleware chains....");
   }
 );
-router.get("/error-req", (req, res) => {
-  try {
-    throw new Error();
-  } catch (err) {
-    next(err);
-  }
-});
+router.get("/error-req", throwError);
 router.get("/add-response", addResponse);
 router.get("/rate-limitting", rateLimitting);
-router.get("/async-error", [
-  function (req, res, next) {
-    fs.writeFile("/inaccessible-path", "data", next);
-  },
-  function (req, res) {
-    res.send("OK");
-  },
-]);
+router.get("/async-error", readFile, SuccessMessage);
 router.get("/validate-params", validateParams);
 router.use(errorHandler);
 
