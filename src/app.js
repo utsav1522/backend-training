@@ -4,10 +4,14 @@ import router from "./router.js";
 import cookieParser from "cookie-parser";
 
 import requestIp from "request-ip";
+import { seedingData } from "./scripts/seeding.js";
 
 const env = dotenv.config().parsed;
 const app = express();
 app.set("trust proxy", true);
+
+seedingData();
+
 let port = env.PORT || 4000;
 app.use(requestIp.mw());
 app.use("/api", router);

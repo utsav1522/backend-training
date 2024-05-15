@@ -1,11 +1,13 @@
-import { faker } from "@faker-js/faker";
+import { base, faker } from "@faker-js/faker";
 import times from "lodash/times.js";
 import fs from "fs/promises";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
 const env = dotenv.config().parsed;
 
 const seedingData = () => {
-  console.log(env.SEEDING_DATA);
   const SEEDING_DATA = env.SEEDING_DATA;
   if (SEEDING_DATA) {
     addData();
@@ -29,17 +31,18 @@ const generateData = (count) => {
 
 const addData = () => {
   const newData = generateData(100);
-  fs.writeFile(
-    "/home/utsav.jain/Desktop/backend-training/backend-training/Assignment-2/mock/mocking.txt",
-    `${JSON.stringify(newData)}`,
-    (err) => {
-      if (err) {
-        console.error("Error writing file:", err);
-        return;
-      }
-      console.log("Data added to array and file updated successfully!");
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+  const basePath = path.resolve(__dirname, "..");
+  const relativePath = path.join(basePath, "..", "mock", "mocking.txt");
+
+  fs.writeFile(relativePath, `${JSON.stringify(newData)}`, (err) => {
+    if (err) {
+      console.error("Error writing file:", err);
+      return;
     }
-  );
+    console.log("Data added to array and file updated successfully!");
+  });
 };
 
 export { seedingData };
