@@ -1,6 +1,7 @@
 import fs from "fs";
 import readline from "readline";
 import { addition, subtraction, multiplication, division } from "./lib/math.js";
+import { Logger } from "../src/libs/requestLogger.js";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -15,9 +16,9 @@ const appendDataToCSV = (operation, num1, num2, result) => {
   const csvData = `${operation},${num1},${num2},${result}\n`;
   fs.appendFile("results.csv", csvData, (err) => {
     if (err) {
-      console.error("Error writing to file:", err);
+      Logger.error("Error writing to file:", err);
     } else {
-      console.log("Result saved to results.csv");
+      Logger.info("Result saved to results.csv");
     }
     rl.close();
   });
@@ -29,10 +30,10 @@ fs.access("results.csv", fs.constants.F_OK, async (err) => {
     const headers = "Operation, Num1, Num2, Result\n";
     try {
       await fs.promises.writeFile("results.csv", headers);
-      console.log("Headers added to results.csv");
+      Logger.info.log("Headers added to results.csv");
       collectInput();
     } catch (error) {
-      console.error("Error writing headers to file:", error);
+      Logger.error("Error writing headers to file:", error);
       rl.close();
     }
   } else {

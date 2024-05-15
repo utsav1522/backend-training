@@ -4,6 +4,7 @@ import fs from "fs/promises";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import { Logger } from "../libs/requestLogger.js";
 
 const env = dotenv.config().parsed;
 
@@ -35,14 +36,15 @@ const addData = () => {
 
   const basePath = path.resolve(__dirname, "..");
   const relativePath = path.join(basePath, "..", "mock", "mocking.txt");
-
+  Logger.info("Seeding Started");
   fs.writeFile(relativePath, `${JSON.stringify(newData)}`, (err) => {
     if (err) {
-      console.error("Error writing file:", err);
+      Logger.error("Error writing file:", err);
       return;
     }
-    console.log("Data added to array and file updated successfully!");
+    Logger.info("Data added to array and file updated successfully!");
   });
+  Logger.info("Seeding ended");
 };
 
 export { seedingData };
