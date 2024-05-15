@@ -2,14 +2,17 @@ import express from "express";
 import dotenv from "dotenv";
 import router from "./router.js";
 import cookieParser from "cookie-parser";
-
-import requestIp from "request-ip";
+import { seedingData } from "./scripts/seeding.js";
+import { Logger } from "./libs/requestLogger.js";
 
 const env = dotenv.config().parsed;
 const app = express();
 app.set("trust proxy", true);
+
+seedingData();
+
 let port = env.PORT || 4000;
-app.use(requestIp.mw());
+
 app.use("/api", router);
 app.use(cookieParser());
 
@@ -22,11 +25,11 @@ app.use("/", (req, res) => {
     expires: new Date(Date.now() + 900000),
   });
 
-  console.log("Unsigned Cookies; ", req.cookies);
-  console.log(req.headers.cookie);
+  Logger.info("Unsigned Cookies; ", req.cookies);
+  Logger.info(req.headers.cookie);
   res.send("Backend Training Assignment...");
 });
 
 app.listen(port, function () {
-  console.log("Server Running on", Number(port));
+  Logger.info(`Server Running on ${Number(port)}`);
 });
