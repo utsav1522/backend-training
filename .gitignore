@@ -3,3 +3,4 @@
 package-lock.json
 .env
 /mock/mocking.txt
+/dist
