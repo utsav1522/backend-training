@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { seedingData } from "./scripts/seeding.js";
 import { Logger } from "./libs/requestLogger.js";
 import { connectDb } from "./db/connectionInstance.js";
+import helment from "helmet";
 
 const env = dotenv.config().parsed;
 const app = express();
@@ -14,6 +15,7 @@ seedingData();
 
 let port = env.PORT || 4000;
 
+app.use(helment());
 app.use("/api", router);
 app.use(cookieParser());
 
@@ -30,6 +32,7 @@ app.use("/", (req, res) => {
   Logger.info(req.headers.cookie);
   res.send("Backend Training Assignment...");
 });
+
 connectDb()
   .then(() => {
     app.listen(port, function () {
