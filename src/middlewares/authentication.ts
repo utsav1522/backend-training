@@ -6,16 +6,22 @@
 
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-
+import { Request, Response, NextFunction } from "express";
 const env = dotenv.config().parsed;
-const SECRET_TOKEN = env.SECRET_TOKEN;
+const SECRET_TOKEN = env!.SECRET_TOKEN;
 
-const authenticate = async (req, res, next) => {
+const authenticate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const authHeaders = req.headers["authorization"];
 
-    if (authHeaders.split(" ")[0] !== "Bearer") {
+    if (authHeaders && authHeaders.split(" ")[0] !== "Bearer") {
       return res.status(401).send("Invalid Token");
+    } else {
+      res.status(400).send("Bad Request");
     }
     const token = authHeaders && authHeaders.split(" ")[1];
 
@@ -29,7 +35,7 @@ const authenticate = async (req, res, next) => {
       return res.status(400).send("User Details not Found");
     }
   } catch (err) {
-    return res.status(401).send(err.message);
+    return res.status(401).send(err);
   }
 };
 

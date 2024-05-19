@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
-import router from "./router.js";
+import router from "./router";
 import cookieParser from "cookie-parser";
-import { seedingData } from "./scripts/seeding.js";
-import { Logger } from "./libs/requestLogger.js";
+import { seedingData } from "./scripts/seeding";
+import { Logger } from "./libs/requestLogger";
 
 const env = dotenv.config().parsed;
 const app = express();
@@ -11,7 +11,7 @@ app.set("trust proxy", true);
 
 seedingData();
 
-let port = env.PORT || 4000;
+let port = env!.PORT || 4000;
 
 app.use("/api", router);
 app.use(cookieParser());
