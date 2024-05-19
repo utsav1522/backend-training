@@ -1,4 +1,6 @@
-import { getUserDataById } from "../../service/userService/userService.js";
+import {
+  getUserDataById,
+} from "../../service/userService/userService.js";
 import { mockData } from "../../mock/MockData.js";
 
 class UserController {

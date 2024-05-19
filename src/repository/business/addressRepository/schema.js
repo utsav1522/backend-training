@@ -11,6 +11,7 @@ const countrySchema = mongoose.Schema(
       type: String,
       trim: true,
       required: true,
+      unique: true,
     },
     state: {
       type: String,
@@ -21,16 +22,19 @@ const countrySchema = mongoose.Schema(
       type: String,
       trim: true,
       required: true,
+      unique: true,
     },
     latitude: {
       type: Number,
       trim: true,
       required: true,
+      unique: true,
     },
     longitude: {
       type: Number,
       required: true,
       trim: true,
+      unique: true,
     },
   },
   { timeStamps: true }

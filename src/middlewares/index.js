@@ -3,7 +3,7 @@ import { locations } from "./locations.js";
 import { addResponse } from "./addResponse.js";
 import { rateLimitting } from "./rate-limitting.js";
 import { dataFetching, errorHandling } from "./errorHandling.js";
-
+import { validateAddress } from "./validateAddress.js";
 export {
   authenticate,
   addResponse,
@@ -11,4 +11,5 @@ export {
   dataFetching,
   errorHandling,
   locations,
+  validateAddress,
 };

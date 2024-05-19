@@ -1,9 +1,10 @@
-import fs from "fs/promises";
+import { addressRepository } from "../../repository/business/addressRepository/addressRepository.js";
 import jwt from "jsonwebtoken";
+import fs from "fs/promises";
 import dotenv from "dotenv";
-
 const env = dotenv.config().parsed;
 const SECRET_TOKEN = env.SECRET_TOKEN;
+
 const signIn = async (username, name) => {
   const user = {
     name: name,
@@ -19,4 +20,14 @@ const getLocations = async () => {
   );
   return JSON.parse(result);
 };
-export { signIn, getLocations };
+
+const insertCountry = async (country) => {
+  try {
+    const result = await addressRepository.insertOneCountry(country);
+    return result;
+  } catch (err) {
+    Logger.error("AddressService: InsertAddress Error: ", serr);
+    return err;
+  }
+};
+export { signIn, getLocations, insertCountry };

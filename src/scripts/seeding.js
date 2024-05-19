@@ -37,7 +37,7 @@ const addData = async () => {
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     Logger.info("Inserting Data to Database");
     const result = await addressRepository.insertManyCountries(newData);
-    Logger.info("Data inserted. Result: ", result);
+    Logger.info("Data inserted. Result: ");
     const basePath = path.resolve(__dirname, "..");
     const relativePath = path.join(basePath, "..", "mock", "mocking.txt");
     Logger.info("Seeding Started");

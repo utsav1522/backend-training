@@ -16,4 +16,5 @@ router.post("/register", validate, validationSuccessful);
 router.get("/authorize", authorize);
 router.get("/:id", queryMiddleWare, userController.getById);
 
+
 export default router;

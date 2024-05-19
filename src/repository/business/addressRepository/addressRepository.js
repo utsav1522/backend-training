@@ -1,9 +1,10 @@
-import { Country } from "./model";
+import { Country } from "./model.js";
 
 class AddressRepository {
   async insertOneCountry(country) {
     try {
-      const result = await Country.insert(country);
+      const result = await Country.create(country);
+
       return result;
     } catch (err) {
       return new Error(err);
