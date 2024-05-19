@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import { Logger } from "../libs/requestLogger.js";
-import { Country } from "../repository/business/addressRepository/model.js";
+import { addressRepository } from "../repository/business/addressRepository/addressRepository.js";
 
 const env = dotenv.config().parsed;
 
@@ -31,23 +31,27 @@ const generateData = (count) => {
   });
 };
 
-const addData = () => {
-  const newData = generateData(100);
-  const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  Logger.info("Inserting Data to Database");
-  Country.insertMany(newData);
-  Logger.info("Data inserted");
-  const basePath = path.resolve(__dirname, "..");
-  const relativePath = path.join(basePath, "..", "mock", "mocking.txt");
-  Logger.info("Seeding Started");
-  fs.writeFile(relativePath, `${JSON.stringify(newData)}`, (err) => {
-    if (err) {
-      Logger.error("Error writing file:", err);
-      return;
-    }
-    Logger.info("Data added to array and file updated successfully!");
-  });
-  Logger.info("Seeding ended");
+const addData = async () => {
+  try {
+    const newData = generateData(100);
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+    Logger.info("Inserting Data to Database");
+    const result = await addressRepository.insertManyCountries(newData);
+    Logger.info("Data inserted. Result: ", result);
+    const basePath = path.resolve(__dirname, "..");
+    const relativePath = path.join(basePath, "..", "mock", "mocking.txt");
+    Logger.info("Seeding Started");
+    fs.writeFile(relativePath, `${JSON.stringify(newData)}`, (err) => {
+      if (err) {
+        Logger.error("Error writing file:", err);
+        return;
+      }
+      Logger.info("Data added to array and file updated successfully!");
+    });
+    Logger.info("Seeding ended");
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export { seedingData };
