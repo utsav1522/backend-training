@@ -24,6 +24,9 @@ class AddressController {
       return res.status(500).send("Internal Server Error");
     }
   };
+  public healthCheck(req: Request, res: Response) {
+    res.status(200).send("Health: 100% \nRoute Working");
+  }
 }
 
 const addressController = new AddressController();
