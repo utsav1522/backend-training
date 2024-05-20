@@ -1,16 +1,7 @@
-const dataFetching = (req, res, next) => {
-  req.foo = true;
-  setTimeout(() => {
-    try {
-      throw new Error("error");
-    } catch (ex) {
-      next(ex);
-    }
+const dataFetching = async (req, res, next) => {
+  await Promise.resolve().then(() => {
+    res.status(400).send("Bad Request: File not found");
   });
 };
 
-const errorHandling = (err, req, res, next) => {
-  res.status(500).send("Fail!");
-};
-
-export { dataFetching, errorHandling };
+export { dataFetching };

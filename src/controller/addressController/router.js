@@ -6,7 +6,8 @@ import {
   addResponse,
   rateLimitting,
   dataFetching,
-  errorHandling,
+  globalErrorHandler,
+  validateParams,
 } from "../../middlewares/index.js";
 
 const router = Router();
@@ -18,7 +19,10 @@ router.post(
   rateLimitting,
   addressController.addressData
 );
-router.get("/error", dataFetching, errorHandling);
+router.get("/readfile", dataFetching);
 router.get("/add-response", addResponse);
+router.get("/validate-params", validateParams);
+
+router.use(globalErrorHandler);
 
 export default router;
