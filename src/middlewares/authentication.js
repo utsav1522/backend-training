@@ -13,7 +13,9 @@ const SECRET_TOKEN = env.SECRET_TOKEN;
 const authenticate = async (req, res, next) => {
   try {
     const authHeaders = req.headers["authorization"];
-
+    if (!authHeaders) {
+      return res.status(401).send("Token not specified");
+    }
     if (authHeaders.split(" ")[0] !== "Bearer") {
       return res.status(401).send("Invalid Token");
     }
