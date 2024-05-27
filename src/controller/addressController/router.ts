@@ -18,7 +18,6 @@ router.post(
   rateLimitting,
   addressController.addressData
 );
-router.get("/routecheck", addressController.healthCheck)
 router.get("/error", dataFetching, errorHandling);
 
 router.get("/add-response", addResponse);

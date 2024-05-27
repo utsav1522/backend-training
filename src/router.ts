@@ -6,5 +6,8 @@ const router = Router();
 
 router.use("/user", userRouter);
 router.use("/address", addressRouter);
+router.get("/health-check", (req, res) => {
+  res.send("I am ok");
+});
 
 export default router;
