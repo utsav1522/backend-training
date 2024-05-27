@@ -7,7 +7,7 @@ import {
   rateLimitting,
   dataFetching,
   errorHandling,
-} from "../../middlewares/index.js";
+} from "../../middlewares/index";
 
 const router = Router();
 router.use(express.json());
@@ -20,6 +20,9 @@ router.post(
 );
 router.get("/routecheck", addressController.healthCheck)
 router.get("/error", dataFetching, errorHandling);
+
 router.get("/add-response", addResponse);
+
+
 
 export default router;
