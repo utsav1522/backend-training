@@ -6,9 +6,7 @@ import {
   addResponse,
   rateLimitting,
   dataFetching,
-  globalErrorHandler,
-  validateParams,
-} from "../../middlewares/index.js";
+} from "../../middlewares/index";
 
 const router = Router();
 router.use(express.json());
@@ -19,10 +17,9 @@ router.post(
   rateLimitting,
   addressController.addressData
 );
-router.get("/readfile", dataFetching);
-router.get("/add-response", addResponse);
-router.get("/validate-params", validateParams);
 
-router.use(globalErrorHandler);
+router.get("/add-response", addResponse);
+
+
 
 export default router;
