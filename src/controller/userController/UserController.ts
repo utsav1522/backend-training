@@ -1,25 +1,41 @@
+import { Request, Response } from "express";
+import { getUserDataById } from "../../service/userService/userService";
+import { mockData } from "../../mock/MockData";
 import {
-  getUserDataById,
   addNewUser,
   updateUser,
   findOneUser,
-  generateToken,
   verifyPassword,
-} from "../../service/userService/userService.js";
-import { mockData } from "../../mock/MockData.js";
+  generateToken,
+} from "../../service/userService/userService";
+
+interface User {
+  username: string;
+  password: string;
+  name: string;
+  age: number;
+  permissions: string[];
+  email?: string | null;
+}
+
+const isUser = (doc: any): doc is User => {
+  return (
+    doc && typeof doc === "object" && "username" in doc && "password" in doc
+  );
+};
 
 class UserController {
-  getUsers = (req, res) => {
+  getUsers = (req: Request, res: Response) => {
     res.json(mockData.data);
   };
 
-  getById = (req, res) => {
+  getById = (req: Request, res: Response) => {
     let id = req.params.id;
     const result = getUserDataById(Number(id));
     res.json(result);
   };
 
-  addNewUser = async (req, res) => {
+  addNewUser = async (req: Request, res: Response) => {
     try {
       const doc = await addNewUser(req.body);
       res.status(201).send(doc);
@@ -28,23 +44,25 @@ class UserController {
     }
   };
 
-  login = async (req, res) => {
+  login = async (req: Request, res: Response) => {
     const username = req.body.username;
     const password = req.body.password;
     const doc = await findOneUser(username);
-    if (Object.keys(doc).length) {
+    if (isUser(doc)) {
       const result = await verifyPassword(password, doc.password);
       if (result) {
         const payload = { username: username };
         const token = await generateToken(payload);
         return res.status(200).json({ Token: `Bearer ${token}` });
+      } else {
+        return res.status(401).send("Invalid password");
       }
     } else {
       res.status(404).send("User not found");
     }
   };
 
-  update = async (req, res) => {
+  update = async (req: Request, res: Response) => {
     try {
       const username = req.body.username;
       const query = req.body.query;
@@ -55,5 +73,6 @@ class UserController {
     }
   };
 }
+
 const userController = new UserController();
 export { userController };
