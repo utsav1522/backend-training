@@ -1,3 +1,4 @@
+import { Request, Response, NextFunction } from "express";
 import {
   getLocations,
   signIn,
@@ -5,12 +6,12 @@ import {
 } from "../../service/addressService/addressService.js";
 
 class AddressController {
-  addressData = async (req, res, next) => {
+  addressData = async (req: Request, res: Response) => {
     const locations = await getLocations();
     return res.json(locations);
   };
 
-  userSignIn = async (req, res) => {
+  userSignIn = async (req: Request, res: Response) => {
     try {
       const username = req.body.username;
       const name = req.body.name;
@@ -21,17 +22,17 @@ class AddressController {
         return res.status(400).send("Credentials not specified");
       }
     } catch (err) {
-      return res.status(500).send("Internal Server Error", err);
+      return res.status(500).send("Internal Server Error");
     }
   };
 
-  insertCountry = async (req, res) => {
+  insertCountry = async (req: Request, res: Response) => {
     try {
       const country = req.body;
       const result = await insertCountry(country);
       res.status(201).send(result);
-    } catch (err) {
-      res.status(400).send("Error Inserting Data", err);
+    } catch (err: any) {
+      res.status(400).send(`Error Inserting Data ${err}`);
     }
   };
 }
