@@ -1,14 +1,13 @@
 import express, { Router } from "express";
 import { addressController } from "./addressController.js";
-
+import { validateAddress } from "../../middlewares/validateAddress";
 import {
   authenticate,
   addResponse,
   rateLimitting,
   dataFetching,
   errorHandling,
-  validateAddress,
-} from "../../middlewares/index.js";
+} from "../../middlewares/index";
 
 const router = Router();
 router.use(express.json());
@@ -21,6 +20,7 @@ router.post(
 );
 router.post("/addAddress", validateAddress, addressController.insertCountry);
 router.get("/error", dataFetching, errorHandling);
+
 router.get("/add-response", addResponse);
 
 export default router;

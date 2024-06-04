@@ -2,7 +2,7 @@ import { mockData } from "../../mock/MockData.js";
 import { userRepository } from "../../repository/business/userRepository/userRepository.js";
 import bcrypt from "bcrypt";
 
-const getUserDataById = (id) => {
+const getUserDataById = (id: number) => {
   let result = mockData?.data.find((ele) => {
     if (ele.id === Number(id)) {
       return ele;
@@ -11,7 +11,7 @@ const getUserDataById = (id) => {
   return result;
 };
 
-const addNewUser = async (userDetails) => {
+const addNewUserService = async (userDetails: any) => {
   try {
     console.log(userDetails);
     const salt = await bcrypt.genSalt(10);
@@ -24,4 +24,4 @@ const addNewUser = async (userDetails) => {
   }
 };
 
-export { getUserDataById, addNewUser };
+export { getUserDataById, addNewUserService };

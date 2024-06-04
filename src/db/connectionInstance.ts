@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import { Logger } from "../libs/requestLogger.js";
 
 const env = dotenv.config().parsed;
-const CONNECTION_STRING = env.CONNECTION_STRING;
-const DB_NAME = env.DB_NAME;
+const CONNECTION_STRING = env!.CONNECTION_STRING;
+const DB_NAME = env!.DB_NAME;
 
 export const connectDb = async () => {
   try {

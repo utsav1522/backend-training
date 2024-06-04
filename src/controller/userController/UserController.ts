@@ -1,23 +1,24 @@
+import { Request, Response } from "express";
 import {
+  addNewUserService,
   getUserDataById,
-  addNewUser,
-} from "../../service/userService/userService.js";
-import { mockData } from "../../mock/MockData.js";
+} from "../../service/userService/userService";
+import { mockData } from "../../mock/MockData";
 
 class UserController {
-  getUsers = (req, res) => {
+  getUsers = (req: Request, res: Response) => {
     res.json(mockData.data);
   };
 
-  getById = (req, res) => {
+  getById = (req: Request, res: Response) => {
     let id = req.params.id;
     const result = getUserDataById(Number(id));
     res.json(result);
   };
 
-  addNewUser = async (req, res) => {
+  addNewUser = async (req: Request, res: Response) => {
     try {
-      const doc = await addNewUser(req.body);
+      const doc = await addNewUserService(req.body);
       res.status(201).send(doc);
     } catch (err) {
       res.status(400).send("Bad Request");
