@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 const env = dotenv.config().parsed;
-const SECRET_TOKEN = env.SECRET_TOKEN;
-const signIn = async (username, name) => {
+const SECRET_TOKEN = env!.SECRET_TOKEN;
+const signIn = async (username: string, name: string) => {
   const user = {
     name: name,
     username: username,
@@ -17,6 +17,6 @@ const getLocations = async () => {
   const result = await fs.readFile(
     "/home/utsav.jain/Desktop/backend-training/backend-training/mock/mocking.txt"
   );
-  return JSON.parse(result);
+  return JSON.parse(result.toString());
 };
 export { signIn, getLocations };

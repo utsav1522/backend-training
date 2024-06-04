@@ -1,20 +1,20 @@
 import { Country } from "./model";
 
 class AddressRepository {
-  async insertOneCountry(country) {
+  async insertOneCountry(country: any) {
     try {
       const result = await Country.insert(country);
       return result;
-    } catch (err) {
+    } catch (err: any) {
       return new Error(err);
     }
   }
 
-  async insertManyCountries(countries) {
+  async insertManyCountries(countries: any) {
     try {
       const result = await Country.insertMany(countries);
       return result;
-    } catch (err) {
+    } catch (err : any) {
       return new Error(err);
     }
   }
