@@ -4,6 +4,7 @@ import router from "./router";
 import cookieParser from "cookie-parser";
 import { seedingData } from "./scripts/seeding";
 import { Logger } from "./libs/requestLogger";
+import { connectDb } from "./db";
 
 const env = dotenv.config().parsed;
 const app = express();
@@ -29,7 +30,12 @@ app.use("/", (req, res) => {
   Logger.info(req.headers.cookie);
   res.send("Backend Training Assignment...");
 });
-
-app.listen(port, function () {
-  Logger.info(`Server Running on ${Number(port)}`);
-});
+connectDb()
+  .then(() => {
+    app.listen(port, function () {
+      Logger.info(`Server Running on ${Number(port)}`);
+    });
+  })
+  .catch((error: any) => {
+    Logger.error("Database Connection Error", error );
+  });
