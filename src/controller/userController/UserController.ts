@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
 import { getUserDataById } from "../../service/userService/userService";
+import { Request, Response } from "express";
 import { mockData } from "../../mock/MockData";
 
 class UserController {

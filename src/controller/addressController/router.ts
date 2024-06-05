@@ -1,5 +1,6 @@
 import express, { Router } from "express";
-import { addressController } from "./addressController.js";
+import { addressController } from "./addressController";
+import { validateAddress } from "../../middlewares/validateAddress";
 
 import {
   authenticate,
@@ -18,6 +19,7 @@ router.post(
   rateLimitting,
   addressController.addressData
 );
+router.post("/addAddress", validateAddress, addressController.insertCountry);
 router.get("/error", dataFetching, errorHandling);
 
 router.get("/add-response", addResponse);

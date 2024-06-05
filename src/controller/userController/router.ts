@@ -14,4 +14,5 @@ router.get("/geography", geographyMiddleware, validationSuccessful);
 router.post("/register", validate, validationSuccessful);
 router.get("/:id", queryMiddleWare, userController.getById);
 
+
 export default router;

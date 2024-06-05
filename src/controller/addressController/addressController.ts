@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import {
   getLocations,
   signIn,
+  insertCountry,
 } from "../../service/addressService/addressService.js";
 
 class AddressController {
@@ -22,6 +23,16 @@ class AddressController {
       }
     } catch (err) {
       return res.status(500).send("Internal Server Error");
+    }
+  };
+
+  insertCountry = async (req: Request, res: Response) => {
+    try {
+      const country = req.body;
+      const result = await insertCountry(country);
+      res.status(201).send(result);
+    } catch (err: any) {
+      res.status(400).send(`Error Inserting Data ${err}`);
     }
   };
 }
