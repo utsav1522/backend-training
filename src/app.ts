@@ -37,5 +37,5 @@ connectDb()
     });
   })
   .catch((error: any) => {
-    Logger.error("Database Connection Error");
+    Logger.error("Database Connection Error", error );
   });

@@ -4,7 +4,6 @@ class AddressRepository {
   async insertOneCountry(country: any) {
     try {
       const result = await Country.create(country);
-
       return result;
     } catch (err: any) {
       return new Error(err);

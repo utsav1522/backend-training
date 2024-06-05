@@ -4,6 +4,7 @@ import fs from "fs";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import { addressRepository } from "../repository/business/addressRepository/addressRepository.js";
 import { Logger } from "../libs/requestLogger";
 
 const env = dotenv.config().parsed;
@@ -30,7 +31,7 @@ const generateData = (count: number) => {
   });
 };
 
-const addData = () => {
+const addData = async () => {
   const newData = generateData(100);
   // const __dirname = path.dirname(fileURLToPath(import.meta.url));
   console.log(__dirname);
