@@ -1,8 +1,5 @@
+import { addNewUserService, getUserDataById } from "../../service/userService/userService";
 import { Request, Response } from "express";
-import {
-  addNewUserService,
-  getUserDataById,
-} from "../../service/userService/userService";
 import { mockData } from "../../mock/MockData";
 
 class UserController {

@@ -1,6 +1,7 @@
 import express, { Router } from "express";
-import { addressController } from "./addressController.js";
+import { addressController } from "./addressController";
 import { validateAddress } from "../../middlewares/validateAddress";
+
 import {
   authenticate,
   addResponse,

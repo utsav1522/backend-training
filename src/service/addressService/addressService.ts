@@ -1,8 +1,8 @@
-import { addressRepository } from "../../repository/business/addressRepository/addressRepository";
+import { addressRepository } from "../../repository/business/addressRepository/addressRepository.js";
+import { Logger } from "../../libs/requestLogger.js";
 import jwt from "jsonwebtoken";
 import fs from "fs/promises";
 import dotenv from "dotenv";
-import { Logger } from "../../libs/requestLogger";
 const env = dotenv.config().parsed;
 
 const SECRET_TOKEN = env!.SECRET_TOKEN;

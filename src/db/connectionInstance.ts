@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 import dotenv from "dotenv";
 import { Logger } from "../libs/requestLogger.js";
 
-const env = dotenv.config().parsed;
-const CONNECTION_STRING = env!.CONNECTION_STRING;
-const DB_NAME = env!.DB_NAME;
+const env = dotenv.config();
+const CONNECTION_STRING = process.env.CONNECTION_STRING;
+const DB_NAME = process.env.DB_NAME;
 
 export const connectDb = async () => {
   try {
