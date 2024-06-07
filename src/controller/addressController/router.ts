@@ -24,6 +24,4 @@ router.get("/error", dataFetching, errorHandling);
 
 router.get("/add-response", addResponse);
 
-
-
 export default router;

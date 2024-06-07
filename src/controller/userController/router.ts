@@ -14,5 +14,6 @@ router.get("/geography", geographyMiddleware, validationSuccessful);
 router.post("/register", validate, validationSuccessful);
 router.get("/:id", queryMiddleWare, userController.getById);
 
+router.post("/signup", validate, userController.addNewUser);
 
 export default router;
