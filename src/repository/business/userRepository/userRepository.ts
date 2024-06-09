@@ -1,4 +1,5 @@
-import { User } from "./model.js";
+import { User } from "./model";
+import { Logger } from "../../../libs/requestLogger";
 
 class UserRepository {
   insertNewUser = async (userDetails: any) => {
@@ -7,31 +8,37 @@ class UserRepository {
       const result = await User.create(userDetails);
       console.log(result);
       return result;
-    } catch (err: any) {
-      return `MongoDb Insert Error ${err}`;
-    }
-  };
-
-  findUserByQuery = async (filter: any) => {
-    try {
-      let projections = { __v: 0, id: 0 };
-      const doc = await User.findOne(filter, projections);
-
-      return doc;
     } catch (err) {
-      return `MongoDb Find Error: ${err}` ;
+      return err;
     }
   };
 
-  updateUser = async (filter :any, updateValue: any) => {
+  public async findOneByQuery(query: object, projection?: object) {
     try {
-      const result = await User.updateOne(filter, updateValue, {
-        upsert: true,
-      });
-      return result;
-    } catch (err: any) {
-      return `MongoDB Updation Error: ${err}`;
+      let projections;
+      if (projection && Object.keys(projection).length) {
+        projections = { ...projection, __v: 0 };
+      }
+      const doc = await User.findOne(query, projections);
+      return doc;
+    } catch (error: any) {
+      Logger.error(
+        `user Repo Error: findOneByQuery: ${error.errorResponse.errmsg}`
+      );
+      throw new Error(error.errorResponse.errmsg);
     }
-  };
+  }
+
+  public async updateUser(filter: object, query: object) {
+    try {
+      const doc = await User.updateOne(filter, query, { upsert: true });
+      return doc;
+    } catch (error: any) {
+      Logger.error(
+        `User Repo Error: Update Error: ${error.errorResponse.errmsg}`
+      );
+      throw new Error(error.errorResponse.errmsg);
+    }
+  }
 }
 export const userRepository = new UserRepository();

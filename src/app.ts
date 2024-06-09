@@ -4,7 +4,8 @@ import router from "./router";
 import cookieParser from "cookie-parser";
 import { seedingData } from "./scripts/seeding";
 import { Logger } from "./libs/requestLogger";
-import {connectDb} from "./db";
+import { connectDb } from "./db";
+
 const env = dotenv.config().parsed;
 const app = express();
 app.set("trust proxy", true);
@@ -35,6 +36,6 @@ connectDb()
       Logger.info(`Server Running on ${Number(port)}`);
     });
   })
-  .catch((errro) => {
-    Logger.error("Database Connection Error");
+  .catch((error: any) => {
+    Logger.error("Database Connection Error", error );
   });

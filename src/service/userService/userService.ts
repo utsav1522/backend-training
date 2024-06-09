@@ -3,6 +3,7 @@ import { userRepository } from "../../repository/business/userRepository/userRep
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { Logger } from "../../libs/requestLogger.js";
 
 const env = dotenv.config().parsed;
 const SECRET_TOKEN = env!.SECRET_TOKEN;
@@ -25,7 +26,7 @@ const getUserDataById = (id: number): any => {
   return result;
 };
 
-const addNewUser = async (userDetails: User): Promise<any> => {
+const addNewUserService = async (userDetails: any) => {
   try {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(userDetails.password, salt);
@@ -37,54 +38,55 @@ const addNewUser = async (userDetails: User): Promise<any> => {
   }
 };
 
-const updateUser = async (username: string, query: any): Promise<any> => {
-  try {
-    const user = await findOneUser(username);
-    if (user && !isString(user) && user.permissions.includes("update")) {
-      if (Object.keys(user).length) {
-        const filter = { username: username };
-        const result = await userRepository.updateUser(filter, query);
-        return result;
-      } else {
-        return new Error("Mongo DB User Find Error: User not found");
-      }
-    } else {
-      return new Error("Un Authorized");
-    }
-  } catch (err: any) {
-    return "MongoDB Updation Error: " + err;
-  }
-};
-
-const findOneUser = async (username: string) => {
+const userSignIn = async (username: string, password: string) => {
   try {
     const query = { username: username };
-    const doc = await userRepository.findUserByQuery(query);
-    return doc;
-  } catch (err: any) {
-    return "MongoDB FindByQuery Error" + err;
+    const projections = { _id: 0, updatedAt: 0, createdAt: 0 };
+
+    const user = await userRepository.findOneByQuery(query, projections);
+    Logger.info(user);
+
+    if (user && Object.keys(user).length) {
+      const matchPassword = await bcrypt.compare(
+        password,
+        user!.password as string
+      );
+      if (matchPassword) {
+        const tokenPayload = {
+          name: user!.name,
+          username: user!.username,
+          email: user!.email,
+        };
+        const token = jwt.sign(tokenPayload, SECRET_TOKEN, {
+          expiresIn: "15m",
+        });
+        return { userData: user, token: `Bearer ${token}` };
+      } else {
+        throw "Username and Password not correct";
+      }
+    } else {
+      throw "Username and Password not correct";
+    }
+  } catch (error: any) {
+    Logger.error("User Service Error: userSignIn: ", error);
+    throw error;
   }
 };
 
-const verifyPassword = async (password: string, encryptedPassword: string): Promise<boolean> => {
-  const result = await bcrypt.compare(password, encryptedPassword);
-  return result;
+const userUpdate = async (username: string, updatedValue: object) => {
+  try {
+    if (username !== "") {
+      const filter = { username: username };
+      const query = updatedValue;
+      const result = await userRepository.updateUser(filter, query);
+      return result;
+    } else {
+      return "User not found";
+    }
+  } catch (error: any) {
+    Logger.error("User Service Error: userUpdate: ", error);
+    throw new Error(error);
+  }
 };
 
-const generateToken = async (payload: any): Promise<string> => {
-  const token = await jwt.sign(payload, SECRET_TOKEN, { expiresIn: "1d" });
-  return token;
-};
-
-const isString = (value: any): value is string => {
-  return typeof value === 'string';
-};
-
-export {
-  getUserDataById,
-  addNewUser,
-  updateUser,
-  findOneUser,
-  verifyPassword,
-  generateToken,
-};
+export { getUserDataById, addNewUserService, userUpdate, userSignIn };

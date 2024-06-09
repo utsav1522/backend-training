@@ -4,10 +4,9 @@ class AddressRepository {
   async insertOneCountry(country: any) {
     try {
       const result = await Country.create(country);
-
       return result;
     } catch (err: any) {
-      return (err);
+      return new Error(err);
     }
   }
 
@@ -16,7 +15,7 @@ class AddressRepository {
       const result = await Country.insertMany(countries);
       return result;
     } catch (err: any) {
-      return (err);
+      return new Error(err);
     }
   }
 }

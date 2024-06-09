@@ -25,7 +25,7 @@ const insertCountry = async (country: any) => {
   try {
     const result = await addressRepository.insertOneCountry(country);
     return result;
-  } catch (err: any) {
+  } catch (err) {
     Logger.error("AddressService: InsertAddress Error: ", err);
     return err;
   }
