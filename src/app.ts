@@ -1,4 +1,5 @@
 import express from "express";
+import helmet from "helmet";
 import dotenv from "dotenv";
 import router from "./router";
 import cookieParser from "cookie-parser";
@@ -14,6 +15,7 @@ seedingData();
 
 let port = env!.PORT || 4000;
 
+app.use(helmet());
 app.use("/api", router);
 app.use(cookieParser());
 
@@ -30,6 +32,7 @@ app.use("/", (req, res) => {
   Logger.info(req.headers.cookie);
   res.send("Backend Training Assignment...");
 });
+
 connectDb()
   .then(() => {
     app.listen(port, function () {
@@ -37,5 +40,5 @@ connectDb()
     });
   })
   .catch((error: any) => {
-    Logger.error("Database Connection Error", error );
+    Logger.error("Database Connection Error", error);
   });
