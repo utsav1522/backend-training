@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    trim: true,
+    trims: true,
     min: 2,
     required: true,
   },

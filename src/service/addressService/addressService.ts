@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import fs from "fs/promises";
 import dotenv from "dotenv";
 const env = dotenv.config().parsed;
-
 const SECRET_TOKEN = env!.SECRET_TOKEN;
 const signIn = async (username: string, name: string) => {
   const user = {
