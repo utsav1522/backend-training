@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const countrySchema = mongoose.Schema(
+const countrySchema = new mongoose.Schema(
   {
     country: {
       type: String,
@@ -37,7 +37,7 @@ const countrySchema = mongoose.Schema(
       unique: true,
     },
   },
-  { timeStamps: true }
+  { timestamps: true }
 );
 
 export { countrySchema };
